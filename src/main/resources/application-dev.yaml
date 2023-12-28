@@ -6,6 +6,13 @@ spring:
   thymeleaf:
     check-template-location: false
 
+# Resource Server Config
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9192
+
 # Datasource
   datasource:
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/auth_resource_management_system?createDatabaseIfNotExist=true&autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
