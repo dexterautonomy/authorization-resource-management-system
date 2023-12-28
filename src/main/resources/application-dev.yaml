@@ -1,0 +1,38 @@
+spring:
+  devtools:
+    add-properties: false
+  main:
+    banner-mode: off
+  thymeleaf:
+    check-template-location: false
+
+# Datasource
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/auth_resource_management_system?createDatabaseIfNotExist=true&autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update #BAD PRACTICE, USE MIGRATION/PORTABILITY
+    jpa:
+      show-sql: true
+
+# Logging
+logging:
+  level:
+    org:
+      springframework:
+        security: trace
+
+server:
+  port: 9193
+
+# Properties
+DB_HOST: localhost
+DB_PORT: 3306
+DB_USERNAME: root
+DB_PASSWORD: HingePay.2018$
