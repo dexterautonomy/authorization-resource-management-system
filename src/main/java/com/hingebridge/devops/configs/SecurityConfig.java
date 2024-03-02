@@ -7,10 +7,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity /*This is not really needed, tested without it and application works just fine*/
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
@@ -26,8 +27,19 @@ public class SecurityConfig {
                         .authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt.decoder(JwtDecoders.fromIssuerLocation(issuerUri)))
+                        .jwt(jwt -> {
+                            jwt.decoder(JwtDecoders.fromIssuerLocation(issuerUri));
+                            jwt.jwtAuthenticationConverter(customJwtAuthenticationConverter()); //So we can use ROLE instead of SCOPE
+                        })
                 )
                 .build();
+    }
+
+    @Bean
+    public JwtAuthenticationConverter customJwtAuthenticationConverter() {
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(new CustomJwtGrantedAuthoritiesConverter());
+
+        return converter;
     }
 }

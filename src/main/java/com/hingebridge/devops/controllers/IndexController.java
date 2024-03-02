@@ -19,13 +19,13 @@ import static com.hingebridge.devops.constants.Endpoints.INDEX_BASE_URL;
 public class IndexController {
 
     @GetMapping(INDEX)
-    @PreAuthorize("hasAuthority('SCOPE_TESTVIEW')")
+    @PreAuthorize("hasAuthority('TESTVIEW')")
     public Jwt test(@AuthenticationPrincipal Jwt jwt) {
         return jwt;
     }
 
     @GetMapping("/test")
-    @PreAuthorize("hasAuthority('SCOPE_TESTVIEW')")
+    @PreAuthorize("hasAuthority('TESTVIEW1')")
     public String test1(@AuthenticationPrincipal Jwt principal) {
         Map<String, Object> claims = principal.getClaims();
 
