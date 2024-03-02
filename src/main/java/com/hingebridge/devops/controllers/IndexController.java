@@ -25,7 +25,7 @@ public class IndexController {
     }
 
     @GetMapping("/test")
-    @PreAuthorize("hasAuthority('TESTVIEW1')")
+    @PreAuthorize("hasAuthority('TESTVIEW')")
     public String test1(@AuthenticationPrincipal Jwt principal) {
         Map<String, Object> claims = principal.getClaims();
 
