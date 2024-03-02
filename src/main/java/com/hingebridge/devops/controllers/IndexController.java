@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 import static com.hingebridge.devops.constants.Endpoints.INDEX;
 import static com.hingebridge.devops.constants.Endpoints.INDEX_BASE_URL;
 
@@ -15,14 +17,25 @@ import static com.hingebridge.devops.constants.Endpoints.INDEX_BASE_URL;
 @RestController
 @RequestMapping(INDEX_BASE_URL)
 public class IndexController {
+
     @GetMapping(INDEX)
-    @PreAuthorize("hasAuthority('ROLE_VIEW')")
+    @PreAuthorize("hasAuthority('SCOPE_TESTVIEW')")
     public Jwt test(@AuthenticationPrincipal Jwt jwt) {
         return jwt;
     }
 
     @GetMapping("/test")
-    public String test2() {
-        return "Not authenticated";
+    @PreAuthorize("hasAuthority('SCOPE_TESTVIEW')")
+    public String test1(@AuthenticationPrincipal Jwt principal) {
+        Map<String, Object> claims = principal.getClaims();
+
+        return "Hello world";
+    }
+
+    @GetMapping("/home")
+    public String test2(@AuthenticationPrincipal Jwt principal) {
+        Map<String, Object> claims = principal.getClaims();
+
+        return "Hello world: Welcome to home page";
     }
 }
