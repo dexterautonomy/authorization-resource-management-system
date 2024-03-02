@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> {
                             jwt.decoder(JwtDecoders.fromIssuerLocation(issuerUri));
-                            jwt.jwtAuthenticationConverter(customJwtAuthenticationConverter()); //So we can use ROLE instead of SCOPE
+                            jwt.jwtAuthenticationConverter(customJwtAuthenticationConverter()); //So we can remove ROLE_ as well as SCOPE_ from authorities
                         })
                 )
                 .build();
