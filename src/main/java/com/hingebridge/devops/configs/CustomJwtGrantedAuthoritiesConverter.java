@@ -14,7 +14,7 @@ public final class CustomJwtGrantedAuthoritiesConverter implements Converter<Jwt
     /*
     * Say, for e.g the user has an authority 'READ', Spring security would return it as ROLE_READ
     * This class converts the authorities from ROLE_READ to READ, which would be used as @PreAuthorize("hasAuthority('READ')")
-    * instead of @PreAuthorize("hasAuthority('ROLE_TESTVIEW1')")
+    * instead of @PreAuthorize("hasAuthority('ROLE_TESTVIEW')")
     *
     * Another important thing is that, the class helped get rid of the "SCOPE_" prefix as well, so instead of SCOPE_READ, we now have just READ
     * */
@@ -24,7 +24,7 @@ public final class CustomJwtGrantedAuthoritiesConverter implements Converter<Jwt
         var extraDetails = (Map<String, List<String>>) jwt.getClaim("extraDetails");
 
         return extraDetails.get("authorities").stream()
-                .map(role -> new SimpleGrantedAuthority( role))
+                .map(role -> new SimpleGrantedAuthority(role))
                 .collect(Collectors.toList());
     }
 
